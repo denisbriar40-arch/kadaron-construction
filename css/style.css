@@ -129,7 +129,7 @@ button{cursor:pointer;border:0;background:none;font:inherit}
 .projects{padding:110px 0;background:var(--paper)}
 .projects__head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;gap:40px}
 .projects h2{font-family:"Manrope",sans-serif;font-size:clamp(2.4rem,4vw,4rem);font-weight:800;line-height:.95;letter-spacing:-.04em;color:var(--ink)}
-.projects__note{font-size:.8rem;color:var(--muted);max-width:280px;text-align:right;line-height:1.7}
+
 .proj-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;grid-template-rows:300px 280px;gap:14px}
 .proj{position:relative;overflow:hidden;background:#102033;cursor:pointer}
 .proj--tall{grid-row:1/3}
