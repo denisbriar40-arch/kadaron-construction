@@ -1,62 +1,121 @@
-(() => {
-  const $ = (s, c=document) => c.querySelector(s);
-  const menuButton = $('#menuButton');
-  const mobileNav = $('#mobileNav');
+(function(){
+  'use strict';
 
-  menuButton?.addEventListener('click', () => {
-    const open = mobileNav.classList.toggle('is-open');
-    menuButton.setAttribute('aria-expanded', String(open));
-    mobileNav.setAttribute('aria-hidden', String(!open));
+  // Year
+  const yr = document.getElementById('yr');
+  if(yr) yr.textContent = new Date().getFullYear();
+
+  // Nav scroll state
+  const hdr = document.getElementById('siteHeader');
+  function onScroll(){
+    if(!hdr) return;
+    hdr.classList.toggle('scrolled', window.scrollY > 30);
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // Smooth scroll all anchor links
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    const t = document.querySelector(a.getAttribute('href'));
+    if(!t) return;
+    e.preventDefault();
+    const navH = hdr ? hdr.offsetHeight : 76;
+    window.scrollTo({top: t.getBoundingClientRect().top + window.scrollY - navH, behavior:'smooth'});
+    closeMobile();
   });
 
-  mobileNav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-    mobileNav.classList.remove('is-open');
-    menuButton?.setAttribute('aria-expanded','false');
-    mobileNav?.setAttribute('aria-hidden','true');
-  }));
+  // Mobile menu
+  const btn = document.getElementById('hamburger');
+  const mob = document.getElementById('mobileNav');
 
-  const header = $('.site-header');
-  const setHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 20);
-  setHeader();
-  window.addEventListener('scroll', setHeader, {passive:true});
-
-  const revealTargets = document.querySelectorAll('.service-row,.cap,.steps li,.trust__items>div,.portfolio-note,.intro__statement,.intro__body');
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce && 'IntersectionObserver' in window) {
-    revealTargets.forEach(el => el.classList.add('reveal'));
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){ entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
-      });
-    }, {threshold:.08, rootMargin:'0px 0px -35px'});
-    revealTargets.forEach(el => observer.observe(el));
+  function openMobile(){
+    if(!mob) return;
+    mob.classList.add('open');
+    mob.setAttribute('aria-hidden','false');
+    btn && btn.setAttribute('aria-expanded','true');
+    document.body.classList.add('menu-open');
+    mob.querySelector('a') && mob.querySelector('a').focus();
+  }
+  function closeMobile(){
+    if(!mob) return;
+    mob.classList.remove('open');
+    mob.setAttribute('aria-hidden','true');
+    btn && btn.setAttribute('aria-expanded','false');
+    document.body.classList.remove('menu-open');
   }
 
-  const form = $('#quoteForm');
-  const status = $('#formStatus');
-  form?.addEventListener('submit', e => {
-    e.preventDefault();
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-    const data = new FormData(form);
-    const message = [
-      'Hello Kadaron Construction,',
-      '',
-      'I would like to discuss a project.',
-      `Name: ${data.get('name')}`,
-      `Email: ${data.get('email')}`,
-      `Phone: ${data.get('phone') || 'Not provided'}`,
-      `Project type: ${data.get('type')}`,
-      '',
-      `Project details: ${data.get('message')}`
-    ].join('\n');
+  btn && btn.addEventListener('click', function(){
+    mob.classList.contains('open') ? closeMobile() : openMobile();
+  });
+  mob && mob.addEventListener('keydown', function(e){ if(e.key==='Escape') closeMobile(); });
 
-    status.textContent = 'Opening WhatsApp with your enquiry…';
-    const url = `https://wa.me/2347069577000?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank', 'noopener');
+  // Scroll reveal
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion){
+    const els = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add('visible');
+          obs.unobserve(en.target);
+        }
+      });
+    },{rootMargin:'0px 0px -60px 0px', threshold:0.08});
+    els.forEach(function(el){ obs.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  // Contact form
+  const form    = document.getElementById('contactForm');
+  const submit  = document.getElementById('formSubmit');
+  const success = document.getElementById('formSuccess');
+
+  function validate(){
+    let ok = true;
+    ['fname','femail','ftype','fmsg'].forEach(function(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      const empty = !el.value.trim();
+      const badEmail = id==='femail' && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+      const tooShort = id==='fmsg' && el.value.trim().length < 15;
+      if(empty || badEmail || tooShort){
+        el.style.borderColor='#e53935';
+        ok = false;
+      } else {
+        el.style.borderColor='';
+      }
+    });
+    return ok;
+  }
+
+  form && form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!validate()) return;
+    if(submit){ submit.disabled=true; submit.textContent='Sending…'; }
+
+    /* ── INTEGRATION POINT ──────────────────────────────────────
+       Replace the setTimeout below with your chosen method:
+
+       A) Formspree — add action="https://formspree.io/f/YOUR_ID" to the form
+          and method="POST", then remove this JS submit handler entirely.
+
+       B) EmailJS:
+          emailjs.sendForm('SERVICE_ID','TEMPLATE_ID', form,'PUBLIC_KEY')
+            .then(showSuccess, showError);
+
+       C) Netlify Forms — add `netlify` attribute to <form> tag.
+    ─────────────────────────────────────────────────────────── */
+    setTimeout(showSuccess, 1000);
   });
 
-  $('#year').textContent = new Date().getFullYear();
+  function showSuccess(){
+    if(success){ success.style.display='block'; }
+    if(submit){ submit.disabled=false; submit.textContent='Send Project Request ↗'; }
+    form && form.reset();
+    form && form.querySelectorAll('input,select,textarea').forEach(function(el){ el.style.borderColor=''; });
+  }
+
 })();
