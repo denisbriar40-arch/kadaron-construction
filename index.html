@@ -394,7 +394,7 @@
           Connect to Formspree: change action="https://formspree.io/f/YOUR_ID" + method="POST"
           Or use EmailJS see js/main.js INTEGRATION POINT comment
         -->
-        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xvkonpqo" method="POST">
+        <form class="contact-form" id="contactForm" novalidate>
           <div class="form-hd">
             <span>Send us a message</span>
             <small>Required fields marked *</small>
@@ -433,7 +433,10 @@
             <label for="fmsg">Project Description *</label>
             <textarea id="fmsg" name="message" placeholder="Tell us about your project location, size, scope, timeline and any specific requirements." required rows="4"></textarea>
           </div>
-          <button type="submit" class="form-submit">Send Project Request</button>
+          <button type="submit" class="form-submit" id="formSubmit">Send Project Request</button>
+          <div class="form-success" id="formSuccess" style="display:none">
+            Your message has been sent. We will be in touch shortly.
+          </div>
           <div class="form-success" id="formSuccess">
             ✓ Thank you we've received your enquiry and will be in touch shortly.
           </div>
