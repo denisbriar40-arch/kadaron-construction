@@ -181,15 +181,20 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 }
 
 .btn--nav {
-  background: var(--blue-primary);
-  color: var(--white);
-  border: 2px solid var(--blue-primary);
+  background: #1A3A8F;
+  color: #ffffff;
+  border: 2px solid #1A3A8F;
   font-size: 0.8rem;
-  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+  transition: background 200ms ease, transform 200ms ease;
 }
 .btn--nav:hover {
-  background: var(--blue-deep);
-  border-color: var(--blue-deep);
+  background: #0E2660;
+  border-color: #0E2660;
+  transform: translateY(-1px);
 }
 
 .btn--full { width: 100%; justify-content: center; }
@@ -224,21 +229,31 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .logo-name {
   font-family: var(--font-head);
   font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: 0.04em;
-  color: var(--blue-deep);
+  font-size: 1.375rem;
+  letter-spacing: 0.05em;
+  color: #0E2660;
+  line-height: 1;
 }
 
 .logo-sub {
   font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: #6B7280;
   text-transform: uppercase;
+  line-height: 1;
+  margin-top: 3px;
 }
 
-.logo-text--white .logo-name { color: var(--white); }
+.logo-text--white .logo-name {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.375rem;
+  letter-spacing: 0.05em;
+  color: #0E2660;
+  line-height: 1;
+}
 .logo-text--white .logo-sub  { color: rgba(255,255,255,0.6); }
 
 /* ============================================================
@@ -248,25 +263,25 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 900;
-  background: var(--white);
-  box-shadow: 0 1px 0 var(--border);
-  transition: box-shadow var(--transition), padding var(--transition);
-  padding: 0.875rem 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e8ef;
+  padding: 0;
+  transition: box-shadow 240ms ease;
 }
 
 .nav--scrolled {
-  background: var(--white);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  padding: 0.75rem 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border-bottom-color: transparent;
 }
 
 .nav__inner {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: 0 2.5rem;
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
+  height: 72px;
+  gap: 2rem;
 }
 
 .nav__links {
@@ -277,31 +292,34 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 }
 
 .nav__link {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--text-dark);
-  transition: color var(--transition);
+  color: #374151;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 200ms ease;
   position: relative;
+  padding: 0.25rem 0;
 }
 
 .nav__link::after {
   content: '';
   position: absolute;
-  bottom: -3px; left: 0; right: 0;
+  bottom: -2px; left: 0; right: 0;
   height: 2px;
-  background: var(--blue-primary);
+  background: #1A3A8F;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--transition);
+  transition: transform 200ms ease;
 }
 
 .nav__link:hover { color: var(--blue-primary); }
 .nav__link:hover::after { transform: scaleX(1); }
 
-.nav--scrolled .nav__link { color: var(--text-dark); }
-.nav--scrolled .nav__link::after { background: var(--blue-primary); }
-.nav--scrolled .logo-name { color: var(--blue-deep); }
-.nav--scrolled .logo-sub  { color: var(--text-muted); }
+
+
+
+
 
 .nav__burger {
   display: none;
@@ -313,14 +331,14 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 
 .nav__burger span {
   display: block;
-  width: 24px;
+  width: 22px;
   height: 2px;
-  background: var(--text-dark);
+  background: #111827;
   border-radius: 2px;
-  transition: background var(--transition);
+  transition: background 200ms ease;
 }
 
-.nav--scrolled .nav__burger span { background: var(--text-dark); }
+
 
 /* ============================================================
    MOBILE MENU
@@ -412,7 +430,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   z-index: 2;
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: calc(var(--space-3xl) + 2rem) var(--space-lg) var(--space-3xl);
+  padding: calc(72px + 5rem) 2.5rem 5rem;
   width: 100%;
 }
 
@@ -1564,9 +1582,24 @@ a.contact__detail-val:hover { color: var(--blue-primary); }
   .nav__links { display: none; }
   .btn--nav   { display: none; }
   .nav__burger { display: flex; }
-  .nav__inner { padding: 0 1.25rem; }
+  .nav__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  height: 72px;
+  gap: 2rem;
+}
 
-  .hero__content { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: calc(72px + 5rem) 2.5rem 5rem;
+  width: 100%;
+}
 
   .hero__heading { font-size: clamp(2.5rem, 10vw, 4rem); }
 
@@ -1644,22 +1677,19 @@ a.contact__detail-val:hover { color: var(--blue-primary); }
 
 /* ── EXACT LOGO IMAGE ── */
 .nav__logo-img {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
-  flex-shrink: 0;
   display: block;
+  flex-shrink: 0;
 }
 
 .nav__logo-img--footer {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
-  flex-shrink: 0;
   display: block;
+  flex-shrink: 0;
   filter: brightness(0) invert(1);
 }
 
-.nav__logo {
-  gap: 0.75rem;
-}
