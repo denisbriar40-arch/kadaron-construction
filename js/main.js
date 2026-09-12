@@ -25,8 +25,7 @@
 
   function updateNav() {
     if (!nav) return;
-    const atTop = window.scrollY < 60;
-    nav.classList.toggle('nav--scrolled', !atTop);
+    nav.classList.toggle('nav--scrolled', window.scrollY > 20);
   }
 
   updateNav();
