@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">Kadaron Construction emblem</title>
+  <desc id="desc">A blue construction emblem featuring a K, safety helmet and gear motif.</desc>
+  <path d="M80 8C40 8 13 29 13 64c0 38 29 64 67 88 38-24 67-50 67-88C147 29 120 8 80 8Z" fill="#0A4AA6"/>
+  <path d="M42 46v66h17V88l24 24h23L76 79l28-33H82L59 72V46H42Z" fill="#fff"/>
+  <path d="M89 43c7-10 24-12 34-2 5 5 7 11 7 17H82c0-6 2-11 7-15Z" fill="#fff"/>
+  <path d="M78 60h55v8H78z" fill="#fff"/>
+  <circle cx="111" cy="91" r="22" fill="none" stroke="#fff" stroke-width="8"/>
+  <path d="M111 69v9M111 104v9M89 91h9M124 91h9M96 76l7 7M119 99l7 7M126 76l-7 7M103 99l-7 7" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="111" cy="91" r="7" fill="#fff"/>
+</svg>
