@@ -1636,3 +1636,18 @@ a.contact__detail-val:hover { color: var(--blue-primary); }
 
   .lightbox__panel { max-height: 95vh; }
 }
+
+/* ── EXACT LOGO IMAGE ── */
+.nav__logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.nav__logo-img--footer {
+  width: 40px;
+  height: 40px;
+  /* On dark footer background, keep the logo visible */
+  filter: brightness(0) invert(1);
+}
