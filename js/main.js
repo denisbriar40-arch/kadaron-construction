@@ -106,7 +106,7 @@
         submit.textContent = 'Sending…';
       }
 
-      fetch('https://formspree.io/f/xvkonpqo', {
+      fetch('https://formspree.io/f/xbgjvnbe', {
         method: 'POST',
         body: new FormData(form),
         headers: { 'Accept': 'application/json' }
